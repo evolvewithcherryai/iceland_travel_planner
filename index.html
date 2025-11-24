@@ -42,6 +42,16 @@
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
         .font-jp-serif { font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "HGSMinchoE", "MS PMincho", serif; }
+        
+        /* Add support for bold tags in description */
+        .desc-content strong {
+            font-weight: 700;
+            color: #2C2C2C;
+            background: linear-gradient(120deg, transparent 0%, transparent 100%, #e8e4d9 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 88%;
+        }
     </style>
 </head>
 <body>
@@ -72,34 +82,34 @@
             BookOpen: (p) => <Icon d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" {...p}/>
         };
 
-        // --- 2. 數據資料 (使用來自搜索的更穩定圖片連結) ---
+        // --- 2. 數據資料 (深度導覽版) ---
         const tripData = [
             {
                 day: 1, date: "11/20", title: "初見冰島", weather: { type: "Snow", temp: "-1°C", wind: "15m/s" },
                 stops: [
                     { 
                         time: "15:00", name: "凱夫拉維克機場", type: "arrival", note: "取車，檢查輪胎", query: "Keflavík International Airport", 
-                        tags: ["務必檢查車身", "領取WiFi"], 
-                        description: "冰島的主要國際門戶。取車時請務必檢查是否已安裝冬季輪胎，並確認車身刮痕狀況。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Keflavik_International_Airport.jpg/1200px-Keflavik_International_Airport.jpg" 
+                        tags: ["必買: 機場免稅酒", "務必檢查: 雪地胎(Studded Tires)", "領取WiFi機"], 
+                        description: "歡迎來到冰火之國！凱夫拉維克機場 (KEF) 雖然不大，卻是旅程的重要起點。<strong>強烈建議您在入境大廳的 Duty Free 先購買啤酒或烈酒</strong>，因為冰島市區的酒稅極高，價格可能相差一倍以上。取車時是關鍵時刻，11月的冰島路況多變，<strong>請務必確認租車公司是否已換上冬季專用的「釘胎 (Studded Tires)」</strong>，這是環島保命的關鍵裝備。同時，建議拿出手機開啟錄影模式，仔細繞車一圈檢查車身舊有的刮痕，以免還車時產生不必要的爭議。",
+                        img: "https://unsplash.com/photos/jS8kM4_BqVs/download?force=true&w=640" 
                     },
                     { 
                         time: "16:30", name: "藍湖溫泉", type: "sight", note: "夢幻乳藍色溫泉", query: "Blue Lagoon Iceland", 
-                        tags: ["預約代號: BL-9928", "必做: 塗抹白泥面膜"],
-                        description: "世界著名的地熱溫泉，湖水呈現夢幻的乳藍色。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Blue_Lagoon_Iceland.jpg/1200px-Blue_Lagoon_Iceland.jpg" 
+                        tags: ["預約代號: BL-9928", "必做: 塗抹白泥面膜", "攻略: 潤髮乳護髮"],
+                        description: "藍湖其實是一個美麗的意外，源自於鄰近地熱發電廠的排水，因富含<strong>二氧化矽(Silica)</strong>和硫磺，湖水呈現夢幻的乳藍色，且對皮膚病有顯著療效。這裡也是攝影愛好者的天堂，但在享受溫泉前有幾點攻略：溫泉水中的礦物質會讓頭髮變得非常乾澀糾結，<strong>下水前「務必」在乾燥的頭髮上塗抹大量的潤髮乳（更衣室有提供）並且不要沖掉</strong>，直接綁起來，盡量避免頭髮碰到溫泉水。池邊有免費的白泥面膜 Bar，記得去挖一大坨塗在臉上，不僅護膚，更是經典的打卡照！",
+                        img: "https://unsplash.com/photos/EqMRa0cgEiI/download?force=true&w=640" 
                     },
                     { 
                         time: "19:00", name: "Bæjarins Beztu 熱狗", type: "food", note: "市區經典小吃", query: "Bæjarins Beztu Pylsur", 
-                        tags: ["必點: Eina með öllu (全加)", "平價美食"],
-                        description: "柯林頓總統都吃過的熱狗堡，是冰島最有名的小吃。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/B%C3%A6jarins_beztu_pylsur.jpg/1200px-B%C3%A6jarins_beztu_pylsur.jpg" 
+                        tags: ["必吃: 冰島國民美食", "必點: Eina með öllu (全加)"],
+                        description: "這家不起眼的小紅亭子自 1937 年開業以來，已成為冰島的國家級地標。甚至連美國前總統柯林頓都曾光顧並大讚美味。冰島熱狗的獨特之處在於肉餡主要由<strong>「冰島本地羊肉」</strong>混合少許豬肉和牛肉製成，口感特別脆彈且無羊羶味。點餐時請直接說通關密語<strong>「Eina með öllu」（One with everything）</strong>，老闆會為你加上生洋蔥、炸洋蔥、特製褐色芥末醬（Pylsusinnep）和蛋黃醬（Remoulade），層次豐富，缺一不可。",
+                        img: "https://unsplash.com/photos/sc5sKPzSj-4/download?force=true&w=640" 
                     },
                     { 
                         time: "21:00", name: "雷克雅維克住宿", type: "hotel", note: "Center Hotels Plaza", query: "Center Hotels Plaza Reykjavik", 
                         tags: ["含早餐", "市中心"],
-                        description: "位於市中心廣場旁，交通方便。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Reykjavik_center.jpg/1200px-Reykjavik_center.jpg" 
+                        description: "Center Hotels Plaza 位於雷克雅維克最熱鬧的 Ingólfstorg 廣場旁，地理位置極佳。晚上可以步行去 Harpa 音樂廳看夜景，或是在 Laugavegur 購物街散步。雖然位於市中心，但在 11 月下旬，若極光指數夠強（KP值>4），<strong>只需走到海邊的步道（Sæbraut），避開路燈直射，就有機會肉眼看見極光在城市上空舞動</strong>。飯店早餐通常提供豐盛的北歐式自助餐，記得多吃點醃製魚類補充體力。",
+                        img: "https://unsplash.com/photos/6b534-1-6b5/download?force=true&w=640" 
                     }
                 ]
             },
@@ -108,33 +118,33 @@
                 stops: [
                     { 
                         time: "09:30", name: "辛格維利爾", type: "sight", note: "板塊交界處", query: "Thingvellir National Park", 
-                        tags: ["世界遺產", "權力遊戲場景"],
-                        description: "歐亞板塊與北美板塊的交界，也是世界上最早的議會遺址。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Thingvellir_National_Park_-_panoramio.jpg/1200px-Thingvellir_National_Park_-_panoramio.jpg" 
+                        tags: ["世界文化遺產", "美劇: 權力遊戲場景", "必拍: 裂縫步道"],
+                        description: "這裡是冰島歷史與地理的靈魂所在。西元 930 年，世界上最早的民主議會（Althing）在此成立，因此成為世界文化遺產。地理上，這裡清晰可見<strong>歐亞板塊與北美板塊的撕裂痕跡</strong>，兩大板塊每年仍以 2 公分的距離分離。漫步在板塊裂縫（Almannagjá）之間，感受大地的力量。如果您是《權力遊戲》的粉絲，別忘了尋找通往艾林谷的<strong>「血門」（Bloody Gate）</strong>，正是取景於此處的峽谷。",
+                        img: "https://unsplash.com/photos/MCK9BjMCed0/download?force=true&w=640" 
                     },
                     { 
                         time: "12:00", name: "Strokkur 間歇泉", type: "sight", note: "每6-10分鐘噴發", query: "Geysir", 
-                        tags: ["錄影準備", "小心風向(濕身)"],
-                        description: "非常活躍的間歇泉，噴發高度可達20-40公尺。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Strokkur%2C_Iceland.jpg/1200px-Strokkur%2C_Iceland.jpg" 
+                        tags: ["錄影準備: 慢動作模式", "攻略: 站在上風處"],
+                        description: "英文中的「Geyser」一詞正是源自冰島的「Geysir」。雖然老蓋錫爾（Geysir）現在大多處於休眠狀態，但旁邊的小老弟 <strong>Strokkur</strong> 非常敬業，每隔 6-10 分鐘就會噴發一次，水柱高度可達 20-40 公尺。觀賞攻略：<strong>請務必觀察風向，站在「上風處」等待</strong>，否則噴發後的熱水霧會瞬間將您淋成落湯雞。噴發前，藍色的泉水會在洞口形成一個美麗的半圓形藍色水泡，是拍攝慢動作影片的最佳時機。",
+                        img: "https://unsplash.com/photos/D-yC8B9Wj8k/download?force=true&w=640" 
                     },
                     { 
                         time: "13:30", name: "黃金瀑布", type: "sight", note: "氣勢磅礴雙層瀑布", query: "Gullfoss Falls", 
-                        tags: ["壯觀", "步道易滑"],
-                        description: "冰島最壯麗的瀑布之一，冬季邊緣會結冰。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Gullfoss_Iceland_2014.jpg/1200px-Gullfoss_Iceland_2014.jpg" 
+                        tags: ["壯觀", "步道易滑: 需冰爪"],
+                        description: "Gullfoss 意為「黃金瀑布」，源自朗格冰川（Langjökull）的河水，泥沙含量高，在陽光照射下金光閃閃。瀑布分為兩層，最終注入 70 公尺深的峽谷中，聲勢浩大。這裡曾差點被賣給外國投資者蓋水力發電廠，幸虧一位當地農家女 Sigríður 的極力抗爭才得以保存原貌，她被視為冰島第一位環保鬥士。<strong>11 月份前往時，瀑布邊緣的步道通常結滿厚冰，請務必穿著簡易冰爪以策安全。</strong>",
+                        img: "https://unsplash.com/photos/ruetTsOuHB8/download?force=true&w=640" 
                     },
                     { 
                         time: "15:30", name: "Kerið 火山口湖", type: "sight", note: "紅色火山岩", query: "Kerid Crater", 
-                        tags: ["需門票", "對比色絕美"],
-                        description: "擁有3000年歷史的火山口湖，紅土與藍水形成對比。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Keri%C3%B0_crater_lake.jpg/1200px-Keri%C3%B0_crater_lake.jpg" 
+                        tags: ["需門票: 400 ISK", "色彩對比"],
+                        description: "Kerið 是一個約 3000 年前形成的火山口湖，也是黃金圈中少數需要購買門票（約 400 ISK）的景點。它的獨特之處在於<strong>火山岩呈現鮮豔的鐵紅色</strong>，而非一般的黑色，火山口內則是一池深邃的藍綠色湖水，紅藍對比在視覺上極具衝擊力。您可以沿著火山口邊緣走一圈（風大請小心），也可以沿著階梯下到湖邊，這裡是天然的圓形劇場，歌手碧玉（Björk）曾在此舉辦過湖上演唱會。",
+                        img: "https://unsplash.com/photos/hsaUOJfBk-U/download?force=true&w=640" 
                     },
                     { 
                         time: "18:00", name: "Hella 住宿", type: "hotel", note: "Stracta Hotel", query: "Stracta Hotel Hella", 
-                        tags: ["極光觀測點", "戶外熱水桶"],
-                        description: "位於南部的舒適飯店，適合觀測極光。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Hekla_volcano.jpg/1200px-Hekla_volcano.jpg" 
+                        tags: ["極光觀測點", "設施: 戶外熱水桶"],
+                        description: "今晚入住 Hella 小鎮，這裡已經遠離了雷克雅維克的光害圈，是觀測極光的絕佳據點。Stracta Hotel 設有戶外的地熱熱水桶（Hot Tubs）和桑拿房。想像一下，在零度的氣溫中，身體泡在暖呼呼的熱水裡，抬頭就能看見滿天星斗甚至是舞動的極光，這絕對是冬季來冰島最奢華的享受。記得晚餐後不要太早睡，隨時留意天空的變化。",
+                        img: "https://unsplash.com/photos/N7RiDzfF2Iw/download?force=true&w=640" 
                     }
                 ]
             },
@@ -143,27 +153,27 @@
                 stops: [
                     { 
                         time: "09:30", name: "水簾洞瀑布", type: "sight", note: "Seljalandsfoss", query: "Seljalandsfoss", 
-                        tags: ["必備雨衣", "可繞至後方"],
-                        description: "可以走到瀑布後方的獨特體驗，請注意防滑。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Seljalandsfoss%2C_Su%C3%B0urland%2C_Islandia%2C_2014-08-16%2C_DD_201-203_HDR.jpg/1200px-Seljalandsfoss%2C_Su%C3%B0urland%2C_Islandia%2C_2014-08-16%2C_DD_201-203_HDR.jpg" 
+                        tags: ["必備: 雨衣/防水褲", "注意: 步道可能封閉"],
+                        description: "這是冰島最優雅的瀑布之一，水源來自著名的艾雅法拉冰蓋（Eyjafjallajökull）。它最大的特色是可以沿著步道走到瀑布「後方」，透過水簾向外看，視角極為獨特。然而，這也意味著你百分之百會被水氣噴濕，<strong>請務必穿著完整的防水外套和防水褲</strong>，保護好相機鏡頭。⚠️ 注意：11 月下旬若遇嚴寒，後方步道可能因冰柱掉落危險而封閉，請遵守現場拉起的警示線。",
+                        img: "https://unsplash.com/photos/mZJcu881Gco/download?force=true&w=640" 
                     },
                     { 
                         time: "11:00", name: "彩虹瀑布", type: "sight", note: "Skógafoss", query: "Skógafoss", 
-                        tags: ["白日夢冒險王", "可登頂"],
-                        description: "寬闊壯麗的瀑布，陽光下常有彩虹。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Skogafoss_from_below.jpg/1200px-Skogafoss_from_below.jpg" 
+                        tags: ["電影: 白日夢冒險王", "必拍: 雙彩虹"],
+                        description: "寬 25 公尺、高 60 公尺的 Skógafoss 是冰島最具代表性的瀑布，出現在電影《白日夢冒險王》和《雷神索爾2》中。由於水量巨大且水氣充沛，只要有陽光照射，幾乎隨時都能看到單道甚至雙道彩虹。傳說維京人 Þrasi 將寶箱藏在瀑布後方。右側有一條陡峭的階梯（約 500 多階），爬上去後可以俯瞰瀑布頂端及遠處的海岸線，雖然累但視野絕對值得。",
+                        img: "https://unsplash.com/photos/A6qKpYdjE1w/download?force=true&w=640" 
                     },
                     { 
                         time: "15:00", name: "雷尼斯黑沙灘", type: "sight", note: "玄武岩柱群", query: "Reynisfjara Beach", 
-                        tags: ["警告: 瘋狗浪", "玄武岩柱"],
-                        description: "著名的黑沙灘與柱狀玄武岩，請務必遠離海浪。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Reynisfjara_Black_Sand_Beach.jpg/1200px-Reynisfjara_Black_Sand_Beach.jpg" 
+                        tags: ["警告: 致命瘋狗浪", "地質奇觀: 玄武岩柱"],
+                        description: "這裡曾被評為世界最美的非熱帶沙灘。黝黑的火山沙灘旁，矗立著整排如管風琴般壯觀的六角形玄武岩柱（Gardar），是地質冷卻收縮形成的奇觀。海中矗立的岩石柱（Reynisdrangar）傳說是來不及躲避陽光而被石化的夜行山怪。<strong>⚠️ 極度重要：這裡是冰島最危險的景點，隨時會有無預警的「瘋狗浪（Sneaker Waves）」捲上岸，每年都有遊客因此喪命。請絕對不要背對大海，並與海水保持至少 30 公尺的安全距離。</strong>",
+                        img: "https://unsplash.com/photos/HU0hIOPoOOs/download?force=true&w=640" 
                     },
                     { 
                         time: "17:30", name: "Vík 住宿", type: "hotel", note: "Hotel Vík í Mýrdal", query: "Hotel Vík í Mýrdal", 
-                        tags: ["現代風格", "酒吧Happy Hour"],
-                        description: "維克鎮上的設計旅店。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Vik_i_Myrdal_Church.jpg/1200px-Vik_i_Myrdal_Church.jpg" 
+                        tags: ["補給站: Krónan超市", "購物: Icewear工廠店"],
+                        description: "Vík 是冰島最南端的村莊，也是環島必經的重要補給站。這裡有大型的 Icewear 工廠店，如果你還沒買羊毛衣或禦寒衣物，這裡是款式最齊全的地方。晚餐後，可以開車到山坡上的紅色教堂（Víkurkirkja），那裡是拍攝 Vík 小鎮全景和黑沙灘夜景的絕佳位置，同時也是避開鎮上燈光拍攝極光的好去處。",
+                        img: "https://unsplash.com/photos/a-black-church-stands-before-mountain-scenery-n2d6ICgBoMI/download?force=true&w=640" 
                     }
                 ]
             },
@@ -172,27 +182,27 @@
                 stops: [
                     { 
                         time: "09:00", name: "斯卡夫塔山", type: "sight", note: "冰川健行集合", query: "Skaftafell Booking Center", 
-                        tags: ["預約: 09:30", "穿著登山鞋", "星際效應場景"],
-                        description: "體驗走在冰川上的震撼。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Skaftafell_Glacier_Iceland.jpg/1200px-Skaftafell_Glacier_Iceland.jpg" 
+                        tags: ["重要預約: 09:30梯次", "電影: 星際效應", "裝備: 需穿登山鞋"],
+                        description: "Skaftafell 是瓦特納冰川國家公園的一部分，也是電影《星際效應》中「曼恩星球」的取景地。這裡提供全世界最容易親近的冰川健行體驗。請務必在預約時間前 30 分鐘抵達基地報到，領取冰爪、冰斧和安全帽。跟隨嚮導踏上萬年藍冰，聽著冰川擠壓的聲音，探索深邃的冰裂縫（Crevasse）和冰洞，感受大自然的鬼斧神工。<strong>請穿著高筒硬底登山鞋以保護腳踝。</strong>",
+                        img: "https://unsplash.com/photos/N7RiDzfF2Iw/download?force=true&w=640" 
                     },
                     { 
                         time: "13:30", name: "傑古沙龍冰河湖", type: "sight", note: "Jökulsárlón", query: "Jökulsárlón", 
-                        tags: ["必看海豹", "藍色浮冰"],
-                        description: "巨大的藍色冰山漂浮在湖面，景色夢幻。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Jokulsarlon_Glacier_Lagoon.jpg/1200px-Jokulsarlon_Glacier_Lagoon.jpg" 
+                        tags: ["必看: 藍色浮冰", "生物: 野生海豹"],
+                        description: "這是冰島最深、也最令人屏息的湖泊。源自 Breiðamerkurjökull 冰川的巨大冰塊崩解後落入湖中，呈現出純粹的冰藍色、白色甚至夾雜著火山灰的黑色條紋。這些冰山在湖中緩慢漂流，最終流入大海。這裡也是野生海豹的棲息地，仔細觀察湖面，常能看到牠們探出頭來好奇地張望。這裡是拍攝電影《007 誰與爭鋒》和《古墓奇兵》的經典場景。",
+                        img: "https://unsplash.com/photos/vRSTDu6nGsM/download?force=true&w=640" 
                     },
                     { 
                         time: "14:30", name: "鑽石沙灘", type: "sight", note: "黑沙上的冰塊", query: "Diamond Beach Iceland", 
-                        tags: ["攝影天堂", "晶瑩剔透"],
-                        description: "海浪將碎冰沖上黑沙灘，宛如鑽石。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Iceland_Diamond_Beach.jpg/1200px-Iceland_Diamond_Beach.jpg" 
+                        tags: ["攝影天堂", "必拍: 晶瑩剔透冰塊"],
+                        description: "就在冰河湖對面的出海口。被海浪帶走的冰山在海上消融後，碎裂成千上萬塊晶瑩剔透的冰塊，被大浪沖刷回黑色的火山沙灘上。在陽光的折射下，這些冰塊閃耀著耀眼的光芒，宛如散落在黑絨布上的巨大鑽石。這裡是攝影師的最愛，嘗試用低角度拍攝海浪穿過冰塊的瞬間，可以拍出極具張力的作品。",
+                        img: "https://unsplash.com/photos/Jf2dJWh6ySU/download?force=true&w=640" 
                     },
                     { 
                         time: "17:00", name: "赫本龍蝦餐", type: "food", note: "Pakkhús Restaurant", query: "Pakkhús Restaurant", 
-                        tags: ["必吃: 魔法龍蝦", "不接受預約"],
-                        description: "赫本鎮著名的龍蝦餐廳，由舊倉庫改建。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Hofn_View_from_the_campsite.jpg/1200px-Hofn_View_from_the_campsite.jpg" 
+                        tags: ["必吃: 魔法龍蝦(Langoustine)", "注意: 不接受預約"],
+                        description: "Höfn 在冰島語中是「港口」的意思，這裡盛產著名的冰島海鰲蝦（Langoustine）。Pakkhús 餐廳位於港口旁，由舊倉庫改建，充滿復古工業風。<strong>必點菜單是「Langoustine Pizza」或「烤海鰲蝦尾」</strong>，肉質比一般龍蝦更鮮甜彈牙。這家餐廳人氣極高且不接受訂位，建議 17:00 一開門就去，否則可能要排隊 1 小時以上。",
+                        img: "https://unsplash.com/photos/a-wooden-dock-leading-to-a-blue-lagoon-EqMRa0cgEiI/download?force=true&w=640" 
                     }
                 ]
             },
@@ -201,27 +211,27 @@
                 stops: [
                     { 
                         time: "09:30", name: "天空之鏡", type: "sight", note: "蝙蝠山 Vestrahorn", query: "Stokksnes",
-                        tags: ["攝影天堂", "倒影絕景"],
-                        description: "Vestrahorn 山峰與黑沙灘淺灘形成的倒影絕景。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Vestrahorn_Island.jpg/1200px-Vestrahorn_Island.jpg" 
+                        tags: ["攝影熱點", "門票: 900 ISK"],
+                        description: "Vestrahorn 山峰棱角分明，像是一隻張開翅膀的蝙蝠，因此被稱為「蝙蝠山」。在山腳下的 Stokksnes 黑沙灘，有一片淺淺的潮汐潟湖。當風平浪靜時，積水會完美倒映出雄偉的山峰，形成絕美的「天空之鏡」。這裡屬於私人土地，需要在入口處的 Viking Cafe 購買門票。這裡還保留了一個當年為了拍攝電影而搭建的維京村落場景。",
+                        img: "https://unsplash.com/photos/_wxc7QDWUVg/download?force=true&w=640" 
                     },
                     { 
                         time: "12:00", name: "Djúpivogur", type: "sight", note: "神鳥蛋雕塑", query: "Djúpivogur",
-                        tags: ["34顆大理石蛋", "寧靜港灣"],
-                        description: "著名的「神鳥蛋」裝置藝術。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Djupivogur_Eggs_of_Merry_Bay.jpg/1200px-Djupivogur_Eggs_of_Merry_Bay.jpg" 
+                        tags: ["裝置藝術: 34顆蛋", "慢活小鎮"],
+                        description: "這是一個奉行「慢活（Cittaslow）」理念的寧靜漁村。最著名的地標是位於港口邊的戶外裝置藝術<strong>「Eggin í Gleðivík」（快樂灣的蛋）</strong>。由冰島藝術家 Sigurður Guðmundsson 創作，34 顆巨大的花崗岩蛋代表了當地 34 種在此築巢的鳥類。每一顆蛋的形狀、大小和顏色都不同，你可以試著找找看哪一顆是冰島國鳥——海鸚鵡（Puffin）的蛋。",
+                        img: "https://unsplash.com/photos/a-rocky-area-with-a-few-rocks-and-moss-growing-on-it-A1a0dcO7uqQ/download?force=true&w=640" 
                     },
                     { 
                         time: "15:00", name: "Seyðisfjörður", type: "sight", note: "彩虹路教堂", query: "Seyðisfjörður",
-                        tags: ["白日夢冒險王場景", "藍色教堂"],
-                        description: "滑板公路的終點，擁有美麗的彩虹路。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Seydisfjordur_view.jpg/1200px-Seydisfjordur_view.jpg" 
+                        tags: ["電影: 白日夢冒險王", "必拍: 彩虹路"],
+                        description: "要抵達這個小鎮，需先翻越積雪的山口（93號公路），這段路正是電影《白日夢冒險王》中主角溜滑板的經典場景。Seyðisfjörður 被群山環繞，猶如世外桃源。鎮中心最吸睛的莫過於那條通往藍色教堂（Blue Church）的彩虹地磚路。這裡充滿了波西米亞的藝術氣息，兩旁是色彩繽紛的木造房屋，隨手一拍都是明信片般的風景。",
+                        img: "https://unsplash.com/photos/y0QtwEc7HsY/download?force=true&w=640" 
                     },
                     { 
                         time: "18:00", name: "Egilsstaðir", type: "hotel", note: "東部住宿", query: "Hótel Valaskjálf",
-                        tags: ["東部最大城", "超市補給"],
-                        description: "冰島東部的交通樞紐與住宿點。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Lagarfljót.jpg/1200px-Lagarfljót.jpg" 
+                        tags: ["補給: Bonus/Netto", "傳說: 拉加爾水怪"],
+                        description: "Egilsstaðir 是冰島東部的商業與交通樞紐，雖然景點不多，但非常適合作為中途休息與補給站。這裡有大型的 Bonus 和 Netto 超市，<strong>建議在此補滿零食與食材</strong>，因為接下來進入北部山區後補給點較少。旁邊的拉加爾湖（Lagarfljót）傳說住著一隻巨大的水怪（Lagarfljótsormur），是冰島版的尼斯湖水怪，當地甚至留有歷史目擊紀錄。",
+                        img: "https://unsplash.com/photos/birds-eye-view-of-waterfalls-2yuqAcos7oc/download?force=true&w=640" 
                     }
                 ]
             },
@@ -230,27 +240,27 @@
                 stops: [
                     { 
                         time: "10:00", name: "黛提瀑布", type: "sight", note: "Dettifoss", query: "Dettifoss",
-                        tags: ["歐洲水量最大", "普羅米修斯"],
-                        description: "氣勢驚人的巨大瀑布，冬季需注意路況。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Dettifoss_2011.jpg/1200px-Dettifoss_2011.jpg" 
+                        tags: ["電影: 普羅米修斯", "稱號: 歐洲最猛瀑布", "注意: 862號公路"],
+                        description: "Dettifoss 寬 100 公尺，高 44 公尺，以每秒 193 立方公尺的驚人水量著稱，被譽為歐洲最洶湧的瀑布。這股原始、毀滅性的力量被導演雷利史考特相中，成為科幻電影《普羅米修斯》開場外星人創造生命的場景。<strong>前往瀑布請務必走西側的 862 號公路（柏油路）</strong>，東側的 864 號公路是碎石路且冬季常封閉。站在邊緣感受大地的震動，會讓你對自然肅然起敬。",
+                        img: "https://unsplash.com/photos/d9ghftBvaCE/download?force=true&w=640" 
                     },
                     { 
                         time: "12:30", name: "Hverir 地熱區", type: "sight", note: "火星地貌", query: "Hverir",
-                        tags: ["硫磺味重", "橘紅色地表"],
-                        description: "冒著蒸氣與泥漿池的地熱區，彷彿置身火星。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Hverar%C3%B6nd.jpg/1200px-Hverar%C3%B6nd.jpg" 
+                        tags: ["特殊氣味: 硫磺味", "地質奇觀"],
+                        description: "一下車，撲鼻而來的是濃烈的硫磺味（俗稱臭雞蛋味）。Hverir 展現了地球最原始的面貌：地表寸草不生，呈現鮮豔的橘紅色和黃色。到處都是冒著高溫蒸氣的噴氣孔（Fumaroles）和滾滾沸騰的灰色泥漿池。走在步道上，彷彿置身於火星表面。請務必走在標示的繩索範圍內，因為周圍的土壤溫度極高，鞋底可能會被融化。",
+                        img: "https://unsplash.com/photos/YN9rvKv7QoE/download?force=true&w=640" 
                     },
                     { 
                         time: "14:00", name: "Krafla 火山口", type: "sight", note: "Viti 火山口湖", query: "Krafla",
-                        tags: ["蒂芬妮藍湖水", "地熱發電廠"],
-                        description: "美麗的火山口湖。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Viti_Crater_Lake_Krafla.jpg/1200px-Viti_Crater_Lake_Krafla.jpg" 
+                        tags: ["必拍: 蒂芬妮藍湖", "地熱發電"],
+                        description: "Krafla 是一個活躍的火山系統，曾有多次噴發紀錄。這裡最著名的景點是 Viti 火山口（Viti 在冰島語中是「地獄」的意思），但這裡一點也不像地獄，反而像天堂。火山口內積聚了一池靜謐的湖水，呈現絕美的<strong>蒂芬妮藍（Tiffany Blue）</strong>。在 11 月，火山口周圍通常覆蓋白雪，與藍色湖水形成夢幻的對比。入口處還能看到巨大的地熱發電廠管線。",
+                        img: "https://unsplash.com/photos/hsaUOJfBk-U/download?force=true&w=640" 
                     },
                     { 
                         time: "16:30", name: "米湖住宿", type: "hotel", note: "Fosshotel Mývatn", query: "Fosshotel Mývatn",
-                        tags: ["極光熱點", "湖景"],
-                        description: "米湖旁的舒適住宿。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Myvatn_Summer.jpg/1200px-Myvatn_Summer.jpg" 
+                        tags: ["極光熱點", "湖景第一排"],
+                        description: "米湖（Mývatn）地區是冰島北部的旅遊精華，也是觀測極光的絕佳地點，因為這裡氣候相對乾燥，雲層較少。Fosshotel Mývatn 設計現代，大片落地窗讓你在室內就能欣賞湖景。如果運氣好，晚上只需走出飯店門口，就能看見極光倒映在湖面上的絕景。",
+                        img: "https://unsplash.com/photos/YP_UWxbsALc/download?force=true&w=640" 
                     }
                 ]
             },
@@ -259,27 +269,27 @@
                 stops: [
                     { 
                         time: "09:30", name: "黑色城堡", type: "sight", note: "Dimmuborgir", query: "Dimmuborgir",
-                        tags: ["熔岩迷宮", "奇岩怪石"],
-                        description: "天然的熔岩迷宮。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Dimmuborgir_2.jpg/1200px-Dimmuborgir_2.jpg" 
+                        tags: ["傳說: 13個聖誕老人", "地質: 熔岩迷宮"],
+                        description: "Dimmuborgir 意為「黑暗城堡」，是一片由 2300 年前火山爆發形成的奇特熔岩原。岩漿流動後冷卻坍塌，形成了拱門、塔樓、洞穴等各種詭異形狀的岩石，宛如一座天然迷宮。根據冰島傳說，這裡是惡魔撒旦落地的地方，也是冰島 13 個搗蛋聖誕老人（Yule Lads）居住的家。最著名的岩石是「教堂岩」（Kirkjan），形狀像一座哥德式教堂。",
+                        img: "https://unsplash.com/photos/CaxObZ6ecIg/download?force=true&w=640" 
                     },
                     { 
                         time: "11:00", name: "米湖溫泉", type: "sight", note: "Nature Baths", query: "Mývatn Nature Baths",
-                        tags: ["北部藍湖", "人潮較少"],
-                        description: "北部的藍湖，可眺望米湖盆地。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Jar%C3%B6b%C3%B0in_vi%C3%B0_M%C3%BDvatn.jpg/1200px-Jar%C3%B0b%C3%B6%C3%B0in_vi%C3%B0_M%C3%BDvatn.jpg" 
+                        tags: ["稱號: 北部藍湖", "CP值高"],
+                        description: "如果你覺得南部的藍湖人太多、太商業化，那你一定會愛上米湖溫泉。這裡被稱為「北部的藍湖」，泉水同樣呈現乳藍色，富含礦物質，但人潮少了很多，氣氛更加悠閒寧靜。泡在暖暖的溫泉裡，視線可以越過邊緣，眺望整個米湖盆地和遠處的火山口，是環島途中最放鬆的時刻。",
+                        img: "https://unsplash.com/photos/YP_UWxbsALc/download?force=true&w=640" 
                     },
                     { 
                         time: "14:00", name: "眾神瀑布", type: "sight", note: "Goðafoss", query: "Goðafoss Waterfall",
-                        tags: ["歷史傳說", "壯闊"],
-                        description: "優雅的馬蹄形瀑布。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Godafoss_in_winter.jpg/1200px-Godafoss_in_winter.jpg" 
+                        tags: ["歷史: 基督教化", "造型: 馬蹄形"],
+                        description: "Goðafoss 是一個優雅的馬蹄形瀑布，雖然落差不是最大，但形態極美。西元 1000 年，冰島的法律演講人 Þorgeir Ljósvetningagoði 為了解決宗教紛爭，決定宣布基督教為國教。為了展示決心，他將家中供奉的北歐舊神（如索爾、奧丁）雕像全部投入這座瀑布中，瀑布因此得名「眾神瀑布」。",
+                        img: "https://unsplash.com/photos/2yuqAcos7oc/download?force=true&w=640" 
                     },
                     { 
                         time: "16:00", name: "阿克雷里", type: "hotel", note: "北部首都", query: "Akureyri",
-                        tags: ["愛心紅綠燈", "雙塔教堂"],
-                        description: "冰島第二大城。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Akureyri_church.jpg/1200px-Akureyri_church.jpg" 
+                        tags: ["必拍: 愛心紅綠燈", "美食: Brynja冰淇淋"],
+                        description: "歡迎來到冰島第二大城！這是一個依山傍水的美麗港口城市。這裡最暖心的特色是交通號誌——<strong>所有的紅燈都是「愛心形狀」的！</strong>這是 2008 年金融海嘯後，政府為了安撫人心、傳遞愛與希望而設計的。別忘了去市區的雙塔教堂（Akureyrarkirkja）拍照，如果天氣允許，一定要去吃當地人最愛的 Brynja 冰淇淋，即使是冬天也要排隊！",
+                        img: "https://unsplash.com/photos/a-church-with-a-steeple-and-a-steeple-on-the-side-of-it-y0QtwEc7HsY/download?force=true&w=640" 
                     }
                 ]
             },
@@ -288,21 +298,21 @@
                 stops: [
                     { 
                         time: "10:00", name: "格勞姆農場", type: "sight", note: "傳統草皮屋", query: "Glaumbær Farm",
-                        tags: ["哈比人小屋", "歷史博物館"],
-                        description: "保存完整的傳統草皮屋。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Glaumbaer_farmhouse.jpg/1200px-Glaumbaer_farmhouse.jpg" 
+                        tags: ["建築: 哈比人小屋", "歷史博物館"],
+                        description: "想要了解 19 世紀以前冰島人是如何在嚴酷的氣候下生存的嗎？Glaumbær 是一個保存極為完好的傳統草皮屋（Turf House）農場。為了保暖，這些房子的屋頂和牆壁都覆蓋著厚厚的草皮，從遠處看就像是從地底長出來的，非常像《魔戒》裡的哈比人小屋。這裡現在是博物館，展示了當年的生活器具和內部構造。",
+                        img: "https://unsplash.com/photos/a-black-church-stands-before-mountain-scenery-n2d6ICgBoMI/download?force=true&w=640" 
                     },
                     { 
                         time: "13:00", name: "犀牛石", type: "sight", note: "Hvítserkur", query: "Hvítserkur",
-                        tags: ["海上巨石", "像恐龍"],
-                        description: "海中奇特的玄武岩巨石。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Hvitserkur_2011.jpg/1200px-Hvitserkur_2011.jpg" 
+                        tags: ["造型: 喝水的犀牛", "傳說: 石化巨魔"],
+                        description: "Hvítserkur 是一座矗立在海中、高 15 公尺的玄武岩巨石。經過海浪長年的侵蝕，底部形成了兩個空洞，從特定角度看，極像一頭正在低頭喝水的犀牛，也有人說像恐龍。傳說中它是一個企圖破壞教堂鐘聲的夜行巨魔，因為來不及在天亮前躲避陽光而變成了石頭。退潮時，你可以走下海灘近距離欣賞這座奇岩。",
+                        img: "https://unsplash.com/photos/CaxObZ6ecIg/download?force=true&w=640" 
                     },
                     { 
                         time: "17:00", name: "Stykkishólmur", type: "hotel", note: "西部住宿", query: "Fosshotel Stykkishólmur",
-                        tags: ["美麗漁港", "白日夢冒險王"],
-                        description: "斯奈山半島北側的美麗小鎮。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Stykkish%C3%B3lmur_Harbour.jpg/1200px-Stykkish%C3%B3lmur_Harbour.jpg" 
+                        tags: ["電影: 白日夢冒險王", "美食: 藍殼淡菜"],
+                        description: "這是斯奈山半島最大的城鎮，也是電影《白日夢冒險王》中，華特米堤搭直升機跳海那段「格陵蘭」場景的實際拍攝地。小鎮擁有色彩繽紛的丹麥式老房子和一座造型前衛的現代教堂（Stykkishólmskirkja）。這裡盛產藍殼淡菜（Mussels），晚餐建議在港口附近的餐廳享用這道鮮美的海味。",
+                        img: "https://unsplash.com/photos/a-wooden-dock-leading-to-a-blue-lagoon-EqMRa0cgEiI/download?force=true&w=640" 
                     }
                 ]
             },
@@ -311,27 +321,27 @@
                 stops: [
                     { 
                         time: "09:30", name: "教會山", type: "sight", note: "Kirkjufell", query: "Kirkjufell Mountain",
-                        tags: ["必拍倒影", "權力遊戲"],
-                        description: "冰島最經典的草帽山。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Kirkjufell_in_Iceland.jpg/1200px-Kirkjufell_in_Iceland.jpg" 
+                        tags: ["必拍: 冰島地標", "美劇: 權力遊戲箭簇山"],
+                        description: "Kirkjufell（教會山）因外型像一座教堂而得名，又被稱為「草帽山」。這裡是全冰島被拍攝次數最多的景點，也是《權力遊戲》中的「箭簇山」（Arrowhead Mountain）。經典的拍攝角度是站在馬路對面的教會山瀑布（Kirkjufellsfoss）旁，以瀑布為前景，帶出後方拔地而起的圓錐形山峰，無論是日出、日落或極光背景都美得令人窒息。",
+                        img: "https://unsplash.com/photos/xvhTkrnnfro/download?force=true&w=640" 
                     },
                     { 
                         time: "13:30", name: "巨人像", type: "sight", note: "Arnarstapi", query: "Arnarstapi",
-                        tags: ["章魚爺爺", "海蝕洞"],
-                        description: "壯觀的玄武岩海岸線與海蝕洞。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Arnarstapi_statue.jpg/1200px-Arnarstapi_statue.jpg" 
+                        tags: ["必看: 海蝕洞", "傳說: 章魚爺爺"],
+                        description: "Arnarstapi 擁有極為壯觀的玄武岩懸崖海岸線。沿著海崖步道走，你會看到著名的海蝕拱門 Gatklettur。村口有一座巨大的石頭堆疊巨人像，那是當地的守護神 Bárður Snæfellsás，據說他是人類與巨人的混血，最終消失在冰蓋中守護這片土地。雕像造型奇特，也被遊客暱稱為「章魚爺爺」。",
+                        img: "https://unsplash.com/photos/HU0hIOPoOOs/download?force=true&w=640" 
                     },
                     { 
                         time: "15:00", name: "黑教堂", type: "sight", note: "Búðakirkja", query: "Búðakirkja",
-                        tags: ["極簡攝影", "黑色木造"],
-                        description: "孤獨矗立在荒野中的黑色教堂。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Budakirkja.jpg/1200px-Budakirkja.jpg" 
+                        tags: ["風格: 極簡主義", "攝影: 黑白對比"],
+                        description: "Búðakirkja 是一座漆黑的木造教堂，孤獨地矗立在 Búðahraun 熔岩原上。它是冰島最古老的木造教堂之一。極簡的全黑外觀（只有門窗是白色），配上周圍金黃色的野草、黑色的熔岩石以及遠處白雪皚皚的冰川，形成了一種強烈而孤寂的視覺美感，是婚紗攝影和極簡風格攝影師的朝聖地。",
+                        img: "https://unsplash.com/photos/n2d6ICgBoMI/download?force=true&w=640" 
                     },
                     { 
                         time: "18:00", name: "雷克雅維克", type: "hotel", note: "返回首都", query: "Center Hotels Plaza",
-                        tags: ["環島完成", "慶祝晚餐"],
-                        description: "回到雷克雅維克。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Reykjavik_center.jpg/1200px-Reykjavik_center.jpg" 
+                        tags: ["必做: 慶功宴", "購物: 最後衝刺"],
+                        description: "恭喜你完成了環島之旅！回到熟悉的雷克雅維克，今晚是旅程的最後一晚。可以選擇一家高級餐廳享用冰島羊排或海鮮大餐作為慶功宴。晚餐後，可以到著名的 Brauð & Co 麵包店買肉桂捲當明天的早餐，或是去 Bonus 超市買魚子醬牙膏、火山鹽巧克力當作伴手禮。",
+                        img: "https://unsplash.com/photos/zDR1sLgiEwY/download?force=true&w=640" 
                     }
                 ]
             },
@@ -340,27 +350,27 @@
                 stops: [
                     { 
                         time: "09:30", name: "哈爾格林姆教堂", type: "sight", note: "登頂俯瞰", query: "Hallgrímskirkja",
-                        tags: ["俯瞰市區", "管風琴"],
-                        description: "雷克雅維克地標教堂。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Hallgrimskirkja_Reykjavik.jpg/1200px-Hallgrimskirkja_Reykjavik.jpg" 
+                        tags: ["必去: 塔頂觀景台", "建築: 玄武岩風格"],
+                        description: "這座高 74.5 公尺的教堂是雷克雅維克最顯眼的地標。建築師 Gudjon Samuelsson 的設計靈感來自冰島著名的「柱狀玄武岩」，外觀如火箭般一飛沖天。進入教堂免費，但強烈建議購買門票搭電梯上塔頂。從那裡可以 360 度俯瞰雷克雅維克市區，那些色彩繽紛、如積木般的鐵皮屋頂盡收眼底，是道別這座城市的最佳角度。",
+                        img: "https://unsplash.com/photos/ofm7ijG3kVg/download?force=true&w=640" 
                     },
                     { 
                         time: "11:00", name: "Harpa 音樂廳", type: "sight", note: "玻璃蜂巢", query: "Harpa Concert Hall",
-                        tags: ["光影建築", "海邊漫步"],
-                        description: "美麗的玻璃帷幕建築。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Harpa_Reykjavik.jpg/1200px-Harpa_Reykjavik.jpg" 
+                        tags: ["建築: 幾何美學", "必拍: 光影變化"],
+                        description: "位於舊港旁的 Harpa 是現代建築的傑作。其外牆由數千塊不規則的幾何玻璃磚組成，靈感同樣來自玄武岩。這些玻璃在白天會反射天空和海洋的顏色，呈現出深淺不一的藍綠色；陽光穿透玻璃灑入室內，會形成迷人的光影變化。這裡不僅是音樂廳，也是一個絕佳的公共藝術空間，非常適合拍照。",
+                        img: "https://unsplash.com/photos/zDR1sLgiEwY/download?force=true&w=640" 
                     },
                     { 
                         time: "13:00", name: "Laugavegur", type: "food", note: "購物大街", query: "Laugavegur",
-                        tags: ["羊毛衣", "紀念品"],
-                        description: "市區主要購物街。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Laugavegur_Reykjavik.jpg/1200px-Laugavegur_Reykjavik.jpg" 
+                        tags: ["必買: 66 North", "伴手禮: Omnom 巧克力"],
+                        description: "Laugavegur 是市區最主要的步行購物街。這裡聚集了各式各樣的商店：從昂貴的戶外品牌 66 North、Icewear，到充滿設計感的文創小店。必買伴手禮推薦：Omnom 巧克力（包裝精美）、冰島羊毛毯、以及藍湖保養品。這裡也有許多塗鴉牆，充滿了年輕活力的氣息。",
+                        img: "https://unsplash.com/photos/ofm7ijG3kVg/download?force=true&w=640" 
                     },
                     { 
                         time: "15:00", name: "前往機場", type: "arrival", note: "還車搭機", query: "Keflavík International Airport",
-                        tags: ["提早3小時", "檢查車況"],
-                        description: "前往機場，準備搭機返程。",
-                        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Keflavik_International_Airport.jpg/1200px-Keflavik_International_Airport.jpg" 
+                        tags: ["提醒: 退稅單填寫", "提早: 3小時抵達"],
+                        description: "帶著滿滿的回憶前往機場。請務必提早至少 3 小時抵達，因為還車檢查、搭乘接駁車到航廈、以及辦理退稅（Tax Refund）都需要時間。冰島機場的退稅櫃台通常大排長龍，請預留充足時間。最後，在登機前，別忘了再呼吸一口冰島純淨冷冽的空氣。",
+                        img: "https://unsplash.com/photos/jS8kM4_BqVs/download?force=true&w=640" 
                     }
                 ]
             }
@@ -397,7 +407,6 @@
 
             if (error || !src) {
                 // Fallback: 漂亮的純色背景 + 景點名稱
-                // 使用更柔和的 Zen 風格色調
                 const colors = ['bg-[#E0E0E0]', 'bg-[#D8DCD6]', 'bg-[#E6E2DD]', 'bg-[#C9C0BB]'];
                 const randomColor = colors[Math.floor(Math.random() * colors.length)];
                 
@@ -437,12 +446,27 @@
 
             const getIconBgColor = (type) => {
                 switch(type) {
-                    case 'sight': return 'bg-zen-green border-zen-green'; // Use solid colors for better visibility
-                    case 'food': return 'bg-zen-red border-zen-red';
-                    case 'hotel': return 'bg-zen-blue border-zen-blue';
-                    case 'arrival': return 'bg-zen-accent border-zen-accent';
+                    case 'sight': return 'bg-teal-500 border-teal-100';
+                    case 'food': return 'bg-amber-500 border-amber-100';
+                    case 'hotel': return 'bg-indigo-500 border-indigo-100';
+                    case 'arrival': return 'bg-sky-500 border-sky-100';
                     case 'transport': return 'bg-zen-sub border-zen-sub';
-                    default: return 'bg-stone-400 border-stone-400';
+                    default: return 'bg-stone-400';
+                }
+            };
+
+            // Helper to determine tag style based on keywords
+            const getTagStyle = (tagText) => {
+                if (tagText.includes("必吃") || tagText.includes("必點") || tagText.includes("美食")) {
+                    return "bg-red-50 text-red-700 border-red-100";
+                } else if (tagText.includes("必買") || tagText.includes("購物")) {
+                    return "bg-purple-50 text-purple-700 border-purple-100";
+                } else if (tagText.includes("預約") || tagText.includes("門票") || tagText.includes("提醒")) {
+                    return "bg-amber-50 text-amber-700 border-amber-100";
+                } else if (tagText.includes("警告") || tagText.includes("注意")) {
+                    return "bg-orange-50 text-orange-700 border-orange-100";
+                } else {
+                    return "bg-stone-50 text-zen-sub border-stone-200";
                 }
             };
 
@@ -484,11 +508,11 @@
                                 </button>
                             </div>
 
-                            {/* Tags */}
+                            {/* Tags with Dynamic Coloring */}
                             {stop.tags && (
                                 <div className="flex flex-wrap gap-2 mb-4">
                                     {stop.tags.map((tag, i) => (
-                                        <span key={i} className="text-[10px] tracking-wider font-medium bg-stone-50 text-zen-sub border border-stone-200 px-2 py-1 rounded-md uppercase">
+                                        <span key={i} className={`text-[10px] tracking-wider font-bold px-2 py-1 rounded-md uppercase border ${getTagStyle(tag)}`}>
                                             {tag}
                                         </span>
                                     ))}
@@ -502,14 +526,16 @@
                                     className={`flex items-center text-xs font-bold px-0 py-1 transition-colors ${isOpen ? 'text-zen-text' : 'text-zen-sub hover:text-zen-text'}`}
                                 >
                                     <Icons.BookOpen size={14} className="mr-1.5"/>
-                                    {isOpen ? '收起介紹' : '查看介紹'}
+                                    {isOpen ? '收起介紹' : '景點介紹'}
                                 </button>
                             </div>
 
-                            {/* Collapsible Description */}
-                            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-96 opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
-                                <div className="bg-[#F9F9F7] p-4 rounded-xl text-sm text-stone-600 leading-relaxed border border-stone-100 font-serif italic">
-                                    {stop.description}
+                            {/* Collapsible Description - Supports dangerouslySetInnerHTML for bold tags */}
+                            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100 mt-3' : 'max-h-0 opacity-0'}`}>
+                                <div 
+                                    className="desc-content bg-[#F9F9F7] p-4 rounded-xl text-sm text-stone-600 leading-relaxed border border-stone-100 text-justify font-serif"
+                                    dangerouslySetInnerHTML={{ __html: stop.description }}
+                                >
                                 </div>
                             </div>
                         </div>
@@ -586,9 +612,9 @@
                             </h3>
                             <div className="grid grid-cols-2 gap-3">
                                 {emergency.map((e, i) => (
-                                    <div key={i} className="bg-stone-50 p-3 rounded-xl text-center border border-stone-100">
+                                    <div key={i} className="bg-stone-50 p-3 rounded-xl text-center border border-stone-100 hover:bg-stone-100 transition-colors">
                                         <div className="text-[10px] text-stone-500 mb-1 font-medium">{e.title}</div>
-                                        <div className="text-xl font-bold text-zen-text font-serif tracking-wide">{e.number}</div>
+                                        <a href={`tel:${e.number}`} className="text-xl font-bold text-zen-text font-serif tracking-wide">{e.number}</a>
                                     </div>
                                 ))}
                             </div>
@@ -679,37 +705,45 @@
 
             return (
                 <div className="max-w-md mx-auto h-screen flex flex-col bg-stone-50 font-sans">
-                    <header className="bg-white px-6 pt-14 pb-6 shadow-sm z-10 relative border-b border-stone-100">
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <p className="text-[10px] font-bold tracking-[0.2em] text-zen-sub uppercase mb-1">Itinerary</p>
-                                <h1 className="text-2xl font-black text-zen-text serif-font tracking-wide">冰島環島之旅</h1>
-                            </div>
-                            <div className="w-10 h-10 rounded-full bg-stone-100 flex items-center justify-center border border-stone-200 text-stone-400 font-serif italic font-bold">
-                                Ic
+                    <header className="relative px-6 pt-14 pb-16 shadow-lg z-10 overflow-hidden">
+                        {/* Background Image */}
+                        <div className="absolute inset-0 z-0">
+                            <img 
+                                src="https://images.unsplash.com/photo-1579033461380-adb47c3eb938?auto=format&fit=crop&w=1600&q=80" 
+                                className="w-full h-full object-cover"
+                                alt="Northern Lights"
+                            />
+                            {/* Gradient Overlay for text readability */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60"></div>
+                        </div>
+
+                        <div className="relative z-10">
+                            <h1 className="text-3xl font-black text-white tracking-tight serif-font mb-1 drop-shadow-md">11月20日 - 11月29日</h1>
+                            <div className="flex justify-between items-end mt-2 opacity-95">
+                                <p className="text-sm text-teal-50 font-medium tracking-wide drop-shadow-md">冰島冬季環島遊</p>
+                                <span className="text-[10px] px-3 py-1 bg-white/20 text-white rounded-full font-bold backdrop-blur-md border border-white/20 shadow-sm">10 Days</span>
                             </div>
                         </div>
                     </header>
 
-                    <main className="flex-1 overflow-y-auto px-5 py-4 hide-scrollbar z-20 relative bg-[#FAFAF9]">
+                    <main className="flex-1 overflow-y-auto px-4 -mt-6 py-4 hide-scrollbar z-20 relative">
                         {activeTab === 'itinerary' ? renderItinerary() : <ToolsSection />}
                     </main>
 
-                    <nav className="bg-white/90 backdrop-blur-xl border-t border-stone-200 px-8 py-4 flex justify-around items-center absolute bottom-0 w-full max-w-md z-30 pb-safe shadow-[0_-5px_25px_rgba(0,0,0,0.03)]">
+                    <nav className="bg-white/90 backdrop-blur-lg border-t border-stone-200 px-6 py-3 flex justify-around items-center absolute bottom-0 w-full max-w-md z-30 pb-safe shadow-[0_-5px_20px_rgba(0,0,0,0.03)]">
                         <button 
                             onClick={() => setActiveTab('itinerary')}
-                            className={`flex flex-col items-center space-y-1.5 transition-all duration-300 ${activeTab === 'itinerary' ? 'text-zen-text scale-105' : 'text-stone-300 hover:text-stone-400'}`}
+                            className={`flex flex-col items-center space-y-1 transition-colors ${activeTab === 'itinerary' ? 'text-teal-600' : 'text-stone-400 hover:text-stone-500'}`}
                         >
-                            <Icons.MapPin size={22} strokeWidth={activeTab === 'itinerary' ? 2.5 : 2} />
-                            <span className="text-[10px] font-bold tracking-widest uppercase">行程</span>
+                            <Icons.MapPin size={24} strokeWidth={activeTab === 'itinerary' ? 2.5 : 2} />
+                            <span className="text-[10px] font-bold tracking-wide">行程</span>
                         </button>
-                        <div className="w-px h-8 bg-stone-100"></div>
                         <button 
                             onClick={() => setActiveTab('tools')}
-                            className={`flex flex-col items-center space-y-1.5 transition-all duration-300 ${activeTab === 'tools' ? 'text-zen-text scale-105' : 'text-stone-300 hover:text-stone-400'}`}
+                            className={`flex flex-col items-center space-y-1 transition-colors ${activeTab === 'tools' ? 'text-teal-600' : 'text-stone-400 hover:text-stone-500'}`}
                         >
-                            <Icons.Briefcase size={22} strokeWidth={activeTab === 'tools' ? 2.5 : 2} />
-                            <span className="text-[10px] font-bold tracking-widest uppercase">工具</span>
+                            <Icons.Briefcase size={24} strokeWidth={activeTab === 'tools' ? 2.5 : 2} />
+                            <span className="text-[10px] font-bold tracking-wide">工具</span>
                         </button>
                     </nav>
                 </div>
@@ -721,4 +755,3 @@
     </script>
 </body>
 </html>
-
